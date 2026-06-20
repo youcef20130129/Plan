@@ -1,0 +1,58 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Focus Space</title>
+    <link rel="stylesheet" href="{% static 'css/theme.css' %}">
+</head>
+<body>
+    <div class="todo-container">
+        <h1>focus space</h1>
+
+        {% if user.is_authenticated %}
+        <div class="user-bar">
+            <span class="welcome">welcome, {{ user.username }}</span>
+            <form method="POST" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit" class="logout-btn">exit</button>
+            </form>
+        </div>
+        {% endif %}
+
+        <form method="POST" action="{% url 'create-task' %}" class="create-form">
+            {% csrf_token %}
+            <input type="text" name="title" placeholder="draft a new task ..." autocomplete="off">
+            <button type="submit">add task</button>
+        </form>
+
+        <form method="POST" action="{% url 'list-tasks' %}" class="search-form">
+            {% csrf_token %}
+            <input type="text" name="search" id="search" placeholder="search tasks ...">
+            <button type="submit">find</button>
+        </form>
+
+        <div class="tasks-list">
+            {% for task in tasks %}
+                {% if not task.is_done %}
+                    <div class="task-item">
+                        <span class="task-title">{{ task.title }}</span>
+                        <div class="task-actions">
+                            <form method="POST" action="{% url 'delete-task' task.id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="delete-btn">delete</button>
+                            </form>
+                            <a href="{% url 'edit-task' task.id %}" class="edit-link">edit</a>
+                        </div>
+                    </div>
+                {% endif %}
+            {% empty %}
+                <div class="empty-message">
+                    no pending tasks — create your next focus item
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

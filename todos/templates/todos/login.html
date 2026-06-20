@@ -1,0 +1,23 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Login</title>
+    <link rel="stylesheet" href="{% static 'css/theme.css' %}">
+</head>
+<body>
+    <div class="auth-card">
+        <h1 class="brand-title">Welcome back</h1>
+        <p class="subtext">Sign in to continue your productivity flow with a bold gold and black theme.</p>
+        <form method="POST" class="auth-form">
+            {% csrf_token %}
+            <input type="text" name="username" id="username" placeholder="Username" required autocomplete="username">
+            <input type="password" name="password" id="password" placeholder="Password" required autocomplete="current-password">
+            <button type="submit">Login</button>
+        </form>
+        <p class="footer-note">Don't have an account? <a href="{% url 'register' %}">Register</a></p>
+    </div>
+</body>
+</html>

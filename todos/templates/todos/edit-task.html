@@ -1,0 +1,22 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Edit Task</title>
+    <link rel="stylesheet" href="{% static 'css/theme.css' %}">
+</head>
+<body>
+    <div class="edit-card">
+        <h1 class="page-title">Edit task</h1>
+        <p class="description">Update this note with clarity and return to your focus queue.</p>
+        <form method="POST" action="" class="edit-form">
+            {% csrf_token %}
+            <input type="text" name="title" placeholder="Task title" value="{{ task.title }}" required autofocus>
+            <button type="submit">Save changes</button>
+        </form>
+        <p class="link-row"><a href="{% url 'list-tasks' %}">Back to tasks</a></p>
+    </div>
+</body>
+</html>

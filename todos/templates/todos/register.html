@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Create Account</title>
+    <link rel="stylesheet" href="{% static 'css/theme.css' %}">
+</head>
+<body>
+    <div class="page-loader">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    <div class="auth-card">
+        <h1 class="brand-title">Create your account</h1>
+        <p class="subtext">Register with a secure account to keep your tasks organized in a dramatic gold and black workspace.</p>
+        {% if error %}
+            <div class="alert">{{ error }}</div>
+        {% endif %}
+        <form method="POST" class="auth-form" action="{% url 'register' %}">
+            {% csrf_token %}
+            <input type="text" name="username" placeholder="Username" value="{{ username|default:'' }}" required autocomplete="username">
+            <input type="email" name="email" placeholder="Email address" value="{{ email|default:'' }}" required autocomplete="email">
+            <input type="password" name="password" placeholder="Password" required autocomplete="new-password">
+            <input type="password" name="password2" placeholder="Confirm password" required autocomplete="new-password">
+            <button type="submit">Register</button>
+        </form>
+        <p class="footer-note">Already have an account? <a href="{% url 'login' %}">Log in</a></p>
+    </div>
+</body>
+</html>
