@@ -1,0 +1,25 @@
+services:
+- type: web
+  name: todolist
+  runtime: python
+  runtimeVersion: "3.11.9"
+  buildCommand: pip install -r requirements.txt && python manage.py collectstatic --noinput
+  startCommand: gunicorn firstproject.wsgi
+  envVars:
+  - key: DEBUG
+    value: "False"
+  - key: SECRET_KEY
+    sync: false
+  - key: DATABASE_URL
+    database:
+      name: todolist
+      user: todolist
+  - key: ALLOWED_HOSTS
+    value: ".onrender.com"
+  - key: SECURE_SSL_REDIRECT
+    value: "True"
+
+databases:
+- name: todolist
+  databaseName: todolist_db
+  user: todolist
